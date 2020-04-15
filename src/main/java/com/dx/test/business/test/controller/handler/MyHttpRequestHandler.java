@@ -1,0 +1,31 @@
+package com.dx.test.business.test.controller.handler;
+
+import org.springframework.web.HttpRequestHandler;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+/**
+ * 处理器 Handler
+ * <p>
+ * 通过实现 HttpRequestHandler 接口定义一个 Handler
+ * 这种 Handler 需要 HandlerMapping 的协助才能跟请求对应上
+ */
+public class MyHttpRequestHandler implements HttpRequestHandler {
+
+    /**
+     * HttpRequestHandler 接口只有这一个方法
+     * 因为没有返回值,  HttpRequestHandler 类型的 Handler 并不涉及视图的查找和解析等过程
+     * 这种 Handler 适用于处理简单的 HTTP 请求, 例如一些不需要视图层的静态资源: JS, CSS, 图片等
+     *
+     * @param request  HttpServletRequest
+     * @param response HttpServletResponse
+     * @throws IOException 使用 HttpServletResponse 向页面写内容时可能会抛出此异常
+     */
+    @Override
+    public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // HttpRequestHandler 类型的 Handler 直接通过 HttpServletResponse 向页面写入数据
+        response.getWriter().println("这是一个 HttpRequestHandler 类型的 Handler 通过 HttpServletResponse 写入的内容");
+    }
+}
