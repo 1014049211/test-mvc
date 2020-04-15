@@ -32,7 +32,6 @@ public class MyControllerHandler implements Controller {
         param.put("name", "小明");
         param.put("sex", "人妖");
 
-        //noinspection SpringMVCViewInspection
         return new ModelAndView("test/test", param);
     }
 }
