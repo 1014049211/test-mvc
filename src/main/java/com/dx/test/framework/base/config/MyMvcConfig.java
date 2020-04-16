@@ -6,6 +6,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 /**
@@ -61,5 +63,35 @@ public class MyMvcConfig implements WebMvcConfigurer {
                 // 为空或省略此步骤表示没有需要特殊处理的请求
                 .excludePathPatterns();
 
+    }
+
+    /**
+     * 用于处理 @RequestMapping 的 HandlerMapping
+     * 当配置了自定义的 HandlerMapping 以后, SpringMVC 将不再加载默认的 HandlerMapping
+     * 所以当需要使用的时候, 要自己注册
+     * <p>
+     * SpringMVC 默认的 HandlerMapping 配置在 DispatchServlet.properties 中
+     * key 是 org.springframework.web.servlet.HandlerMapping
+     *
+     * @return RequestMappingHandlerMapping
+     */
+    @Bean
+    public RequestMappingHandlerMapping requestMappingHandlerMapping() {
+        return new RequestMappingHandlerMapping();
+    }
+
+    /**
+     * 用于处理 @RequestMapping 的 HandlerAdapter
+     * 当配置了自定义的 HandlerAdapter 以后, SpringMVC 将不再加载默认的 HandlerAdapter
+     * 所以当需要使用的时候, 要自己注册
+     * <p>
+     * SpringMVC 默认的 HandlerAdapter 配置在 DispatchServlet.properties 中
+     * key 是 org.springframework.web.servlet.HandlerAdapter
+     *
+     * @return RequestMappingHandlerAdapter
+     */
+    @Bean
+    public RequestMappingHandlerAdapter requestMappingHandlerAdapter() {
+        return new RequestMappingHandlerAdapter();
     }
 }
