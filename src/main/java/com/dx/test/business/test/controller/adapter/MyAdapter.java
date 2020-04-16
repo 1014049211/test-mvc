@@ -19,7 +19,7 @@ public class MyAdapter implements HandlerAdapter {
     /**
      * 用于判断 HandlerAdapter 是否能处理传入的 Handler
      *
-     * @param handler 因为 Handler 可是任意类型, 所以此处使用 Object 声明参数
+     * @param handler 因为 Handler 可以是任意类型, 所以此处使用 Object 声明参数
      * @return 是否可以处理当前 Handler: true 可以, false 不可以
      */
     @Override
