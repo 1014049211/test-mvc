@@ -28,7 +28,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
  * 而抽象类可以设置私有的方法和属性
  */
 @Configuration // 使用这个注解标识当前类为 Spring 的配置类
-@EnableWebMvc // 在 SpringMVC 中, 不添加此注解, 重写 WebMvcConfigurer 时无效(如果是 SpringBoot 项目无需此注解)
+@EnableWebMvc // 在 SpringMVC 中, 不添加此注解, 重写 WebMvcConfigurer 的方法无效(如果是 SpringBoot 项目无需此注解)
 @ComponentScan("com.dx") // 告诉 Spring 都有哪些包需要扫描
 public class MyMvcConfig implements WebMvcConfigurer {
 
