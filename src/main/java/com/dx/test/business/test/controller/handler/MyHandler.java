@@ -14,6 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 @Component("/test/myHandler")
 public class MyHandler {
 
+    /**
+     * 定义一个处理方法, 这个方法可以随意定义参数和返回, 只要存在可以处理此方法的 HandlerAdapter 即可
+     *
+     * @param request HttpServletRequest
+     */
     public void handle(HttpServletRequest request) {
         request.setAttribute("test", "这是自定义的 Handler 通过 Request 传输的数据");
     }
