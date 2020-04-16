@@ -18,9 +18,14 @@ public class MyHandler {
      * 定义一个处理方法, 这个方法可以随意定义参数和返回, 只要存在可以处理此方法的 HandlerAdapter 即可
      *
      * @param request HttpServletRequest
+     * @return 此处返回的是视图名称
      */
-    public void handle(HttpServletRequest request) {
+    public String handle(HttpServletRequest request) {
+        // 通过 request 传输一个数据
         request.setAttribute("test", "这是自定义的 Handler 通过 Request 传输的数据");
+
+        // 返回指定的视图 TODO
+        return "";
     }
 
 }
