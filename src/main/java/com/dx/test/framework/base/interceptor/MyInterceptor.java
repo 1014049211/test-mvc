@@ -45,8 +45,8 @@ public class MyInterceptor implements HandlerInterceptor {
         // 将当前时间放入 request 中用于统计 Handler 的执行时间
         request.setAttribute("MyInterceptor_startTime", System.currentTimeMillis());
 
-        // 当前置方法返回 true 时, 标识通过当前 Interceptor , 并进入下一个拦截
-        // 直到所有作用在当前 Handler 上的 Interceptor 的前置方法都返回 true 时, 开始调用 Handler
+        // 当前置方法返回 true 时, 表示通过当前 Interceptor , 并进入下一个 Interceptor 的 preHandle 方法
+        // 直到所有作用在当前 Handler 上的 Interceptor 的 preHandle 方法都返回 true 时, 开始调用 Handler
         // 当前置方法返回 false 时, 直接中断请求
         return true;
     }
