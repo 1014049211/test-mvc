@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 处理器 Handler
  * 这是一个自定义的 Handler, Spring 是允许任何类型的 Handler 的
+ * <p>
+ * Handler 功能上属于 Model 层, 主要功能是处理数据模型及业务逻辑
  */
 // 当 Bean 的 name 以 "/" 开头时, 会根据名字自动建立请求映射, URL 就是 name, Bean 就是这个 URL 的处理器
 @Component("/test/myHandler")
