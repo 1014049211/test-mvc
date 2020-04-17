@@ -4,10 +4,7 @@ import com.dx.test.framework.base.interceptor.MyInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -46,6 +43,24 @@ public class MyMvcConfig implements WebMvcConfigurer {
         viewResolver.setSuffix(".jsp");
 
         return viewResolver;
+    }
+
+    /**
+     * 重写 addResourceHandlers 方法来配置静态资源映射
+     * <p>
+     * 程序的静态资源(如图片、JS、CSS 等) 需要直接访问, 并不需要 Handler 处理
+     * 但是 DispatchServlet 会处理所有请求, 自然也包括静态资源的请求
+     * 此时需要告诉 DispatchServlet 那些是静态资源
+     * <p>
+     * 设置 DispatchServlet 只处理特定后缀的请求也可以避免静态资源被拦截
+     * 例如这样配置 DispatchServlet 要处理的请求: "/*.act"
+     * 这样所有带 ".act" 后缀的请求才会被处理, 以 ".js"、".css" 等结尾的静态资源会直接放行
+     *
+     * @param registry 静态资源映射器
+     */
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/static/**").addResourceLocations("/static/");
     }
 
     /**
