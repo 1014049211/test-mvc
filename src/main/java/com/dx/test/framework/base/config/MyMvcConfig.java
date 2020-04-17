@@ -49,6 +49,17 @@ public class MyMvcConfig implements WebMvcConfigurer {
     }
 
     /**
+     * 重写 addViewControllers 方法可以添加快速的视图跳转映射
+     *
+     * @param registry 快捷视图跳转注册器
+     */
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        // 根目录访问时跳转到主页
+        registry.addViewController("/").setViewName("main");
+    }
+
+    /**
      * 重写 addInterceptors 方法来注册拦截器
      *
      * @param registry Interceptor 注册器
@@ -64,18 +75,8 @@ public class MyMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns()
                 // 添加不用拦截的 URL 请求路径, 支持 String 类型的可变长度参数列表和数组
                 // 为空或省略此步骤表示没有需要特殊处理的请求
-                .excludePathPatterns();
-    }
-
-    /**
-     * 重写 addViewControllers 方法可以添加快速的视图跳转映射
-     *
-     * @param registry 快捷视图跳转注册器
-     */
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        // 根目录访问时跳转到主页
-        registry.addViewController("/").setViewName("main");
+                // 此处不拦截跳转到主页的请求
+                .excludePathPatterns("/");
     }
 
     /**
