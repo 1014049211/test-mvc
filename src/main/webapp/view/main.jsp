@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>Title</title>
     <link rel="stylesheet" href="static/plugin/bootstrap/basic/css/bootstrap.min.css">
+    <title>Title</title>
 </head>
 <body>
 <div class="container">
