@@ -15,6 +15,7 @@ public class TestRequestMappingController {
      * <p>
      * 被 @RequestMapping 标注的方法会在 Spring 的加载过程中被包装成 HandlerMethod 类型的 Handler
      * 除了 @Controller 标注的类以外, @RequestMapping 在任何 Spring 的 Bean 中都可以生效
+     * SpringMVC 的分层, 并不是代码意义上的分层, 而是功能上, 代码上的规范写法是为了更直观的展示项目结构
      * <p>
      * path/value 属性不必在开头添加 "/" , Spring 检测到不是以 "/" 开头, 会自动添加
      */
