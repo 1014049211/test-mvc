@@ -7,6 +7,11 @@
 <body>
 <div class="container">
     <div class="row">
+        <div class="col-md-12">
+            <div style="display: none">这是一个没有灵魂的占位 DIV</div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-3">
             <button type="button" class="btn btn-primary btn-lg btn-block">
                 <!--
