@@ -2,6 +2,16 @@
 <html>
 <head>
     <link rel="stylesheet" href="static/plugin/bootstrap/basic/css/bootstrap.min.css">
+    <style>
+        /*
+        CSS 层级选择: 两个选择期间用空格隔开
+        此处选择的是 class 包含 btn-primary 的元素中的 a 标签元素
+        */
+        .btn-primary a {
+            color: #ffffff;
+        }
+
+    </style>
     <title>Title</title>
 </head>
 <body>
