@@ -11,14 +11,14 @@ import java.util.Map;
 /**
  * 处理器 Handler
  * <p>
- * 通过实现 Controller 接口来定义一个 Handler
- * 注意这个 Controller 是个接口不是 @Controller 注解
- * Controller 类型的 Handler 需要 HandlerMapping 才能跟请求对应
+ * Tips 通过实现 Controller 接口来定义一个 Handler
+ * Tips 注意这个 Controller 是个接口不是 @Controller 注解
+ * Tips Controller 类型的 Handler 需要 HandlerMapping 才能跟请求对应
  */
 public class MyControllerHandler implements Controller {
 
     /**
-     * Controller 类型的 Handler 只有 handleRequest 一个方法
+     * Tips Controller 类型的 Handler 只有 handleRequest 一个方法
      *
      * @param request  HttpServletRequest
      * @param response HttpServletResponse
