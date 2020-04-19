@@ -24,25 +24,25 @@
 
         <!--
         servlet 的依赖
-        使用 3.0+ 的版本时, 可以使用 WebApplicationInitializer 的实现类代替 web.xml
-        默认支持 Servlet3.0+ 的最低版本 Tomcat 是 7.0
+        Tips 使用 3.0+ 的版本时, 可以使用 WebApplicationInitializer 的实现类代替 web.xml
+            默认支持 Servlet3.0+ 的最低版本 Tomcat 是 7.0
         -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
             <!--
-            因为本项目使用 Tomcat 作为 web 容器, Tomcat 自带 Servlet 的 jar
-            为了避免冲突, 此处将 scope 属性设置为 provided
-            表示当前 jar 只在编译和测试使用, 真正打包发布的时候不参与
+            Tips 因为本项目使用 Tomcat 作为 web 容器, Tomcat 自带 Servlet 的 jar
+                为了避免冲突, 此处将 scope 属性设置为 provided
+                表示当前 jar 只在编译和测试使用, 真正打包发布的时候不参与
             -->
             <scope>provided</scope>
         </dependency>
 
         <!--
         SpringMVC 的核心 jar
-        使用 maven 构建 SpringMVC 的项目时, 写上这一个 jar 就可以了
-        maven 会自动根据依赖关系导入其他的 Spring jar, pom 里的内容还是简洁一些比较好
+        Tips 使用 maven 构建 SpringMVC 的项目时, 写上这一个 jar 就可以了
+            maven 会自动根据依赖关系导入其他的 Spring jar, pom 里的内容还是简洁一些比较好
         -->
         <dependency>
             <groupId>org.springframework</groupId>
