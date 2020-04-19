@@ -1,13 +1,18 @@
 package com.dx.test.framework.base.config;
 
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.dx.test.framework.base.interceptor.MyInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import java.util.List;
 
 /**
  * 通过实现 WebMvcConfigurer 来配置 SpringMVC
@@ -28,6 +33,11 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableWebMvc // 在 SpringMVC 中, 不添加此注解, 重写 WebMvcConfigurer 的方法无效(如果是 SpringBoot 项目无需此注解)
 @ComponentScan("com.dx") // 告诉 Spring 都有哪些包需要扫描
 public class MyMvcConfig implements WebMvcConfigurer {
+
+    /**
+     * FastJson 解析器
+     */
+    private FastJsonHttpMessageConverter fastJsonHttpMessageConverter;
 
     /**
      * 注册视图解析器 InternalResourceViewResolver, 用于解析 JSP 视图
@@ -95,6 +105,17 @@ public class MyMvcConfig implements WebMvcConfigurer {
     }
 
     /**
+     * 重写 configureMessageConverters 方法注册自定义的解析器
+     *
+     * @param converters 解析器注册器
+     */
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        // 注册 FastJson 解析器
+        converters.add(fastJsonHttpMessageConverter);
+    }
+
+    /**
      * 用于处理 @RequestMapping 的 HandlerMapping
      * 当配置了自定义的 HandlerMapping 以后, SpringMVC 将不再加载默认的 HandlerMapping
      * 所以当需要使用的时候, 要自己注册
@@ -122,5 +143,15 @@ public class MyMvcConfig implements WebMvcConfigurer {
     @Bean
     public RequestMappingHandlerAdapter requestMappingHandlerAdapter() {
         return new RequestMappingHandlerAdapter();
+    }
+
+    /**
+     * 注入 FastJson 解析器
+     *
+     * @param fastJsonHttpMessageConverter FastJsonHttpMessageConverter
+     */
+    @Autowired
+    public void setFastJsonHttpMessageConverter(FastJsonHttpMessageConverter fastJsonHttpMessageConverter) {
+        this.fastJsonHttpMessageConverter = fastJsonHttpMessageConverter;
     }
 }
