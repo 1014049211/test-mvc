@@ -50,6 +50,13 @@
             <version>5.2.4.RELEASE</version>
         </dependency>
 
+        <!-- 阿里巴巴出品的 json 转换工具, 据说是目前开源的 json 解析中速度最快的 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.58</version>
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
