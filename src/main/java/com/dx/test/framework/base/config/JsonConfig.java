@@ -29,8 +29,6 @@ public class JsonConfig {
         // --------------- 定义配置 ---------------
         FastJsonConfig config = new FastJsonConfig();
         // 编码格式
-        // Tips 除了此处的配置以外, 还要在 application.properties 中设置响应编码来避免服务端返回中文时, 产生乱码的问题:
-        //  spring.http.encoding.force-response=true
         config.setCharset(StandardCharsets.UTF_8);
         // 序列化规则
         config.setSerializerFeatures(
@@ -44,7 +42,7 @@ public class JsonConfig {
                 SerializerFeature.WriteNullBooleanAsFalse
         );
 
-        // --------------- 返回解析器 ---------------
+        // --------------- 初始化解析器 ---------------
         FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
         converter.setFastJsonConfig(config);
 
