@@ -19,7 +19,7 @@ public class JsonConfig {
 
     /**
      * 自定义 Json 解析器
-     * Tips 除此以外, 还可以通过重写 WebMvcConfigurer 的 configureMessageConverters 方法来注册自定义的 Json 解析器
+     * Tips 在 SpringMVC 中需要重写 WebMvcConfigurer 的 configureMessageConverters 方法来注册自定义的 Json 解析器
      *
      * @return FastJsonHttpMessageConverter
      */
