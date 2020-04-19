@@ -10,15 +10,17 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 拦截器 Interceptor
  * <p>
+ * Tips 如何定义 Interceptor
  * 实现 HandlerInterceptor 接口可以定义一个 Interceptor
  * HandlerInterceptor 所有的方法都是 default 的, 实现类只需要重写自己需要的方法
  * <p>
+ * Tips Interceptor 的执行时机
  * Spring 根据 HandlerMapping 查找到 Handler 时, 并不是直接返回 Handler 实例, 而是返回 Handler 执行链: HandlerExecutionChain
  * 这个执行链中封装了所有作用在当前 Handler 上的 Interceptor
  * <p>
- * Interceptor 本身并不需要 Spring 在加载过程中做加强和改变, 添加到 Spring 也是通过注册器, 所以并不用标识为 Spring 的 Bean
+ * Tips Interceptor 本身并不需要 Spring 在加载过程中做加强和改变, 添加到 Spring 也是通过注册器, 所以并不用标识为 Spring 的 Bean
  * <p>
- * Interceptor 与过滤器(Filter)的区别
+ * Tips Interceptor 与过滤器(Filter)的区别
  * 1. 本质区别:
  * Filter 是 Servlet 标准组件, 而 Interceptor 属于 Spring
  * Interceptor 可以获得 SpringMVC 提供的 Handler 和 ModelAndView 等组件, Filter 不能
@@ -45,17 +47,18 @@ public class MyInterceptor implements HandlerInterceptor {
         // 将当前时间放入 request 中用于统计 Handler 的执行时间
         request.setAttribute("MyInterceptor_startTime", System.currentTimeMillis());
 
-        // 当前置方法返回 true 时, 表示通过当前 Interceptor , 并进入下一个 Interceptor 的 preHandle 方法
-        // 直到所有作用在当前 Handler 上的 Interceptor 的 preHandle 方法都返回 true 时, 开始调用 Handler
-        // 当前置方法返回 false 时, 直接中断请求
+        /*
+         * Tips 当前置方法返回 true 时, 表示通过当前 Interceptor , 并进入下一个 Interceptor 的 preHandle 方法
+         *  直到所有作用在当前 Handler 上的 Interceptor 的 preHandle 方法都返回 true 时, 开始调用 Handler
+         *  当前置方法返回 false 时, 直接中断请求
+         */
         return true;
     }
 
     /**
      * 后置方法, 在 Handler 执行完以后调用
-     * 如果 Handler 抛出了异常, postHandle 方法会被跳过
-     * Interceptor 的执行顺序是栈模式, 先进后出, 后进先出
-     * 所以 postHandle 的执行顺序是跟 preHandle 相反的
+     * Tips 如果 Handler 抛出了异常, postHandle 方法会被跳过
+     * Tips Interceptor 的执行顺序是栈模式, 先进后出, 后进先出, 所以 postHandle 的执行顺序是跟 preHandle 相反的
      *
      * @param request      HttpServletRequest
      * @param response     HttpServletResponse
@@ -70,8 +73,8 @@ public class MyInterceptor implements HandlerInterceptor {
 
     /**
      * afterCompletion 方法跟 postHandle 一样是在 Handler 执行后调用
-     * 区别在于, 即便处理器抛出了异常, afterCompletion 方法也依然会被执行, 并且会获得发生的异常
-     * afterCompletion 就像 try-catch-finally 中的 finally
+     * Tips afterCompletion 与 postHandle 区别在于, 即便处理器抛出了异常, afterCompletion 方法也依然会被执行, 并且会获得发生的异常
+     * Tips afterCompletion 就像 try-catch-finally 中的 finally
      *
      * @param request  HttpServletRequest
      * @param response HttpServletResponse
@@ -106,7 +109,7 @@ public class MyInterceptor implements HandlerInterceptor {
 
         // 请求路径
         String URL = request.getRequestURI();
-        
+
         // 计算用时
         if (startTime == null) {
             System.out.println(URL + " 没有获取到处理的开始时间, 无法计算!");
