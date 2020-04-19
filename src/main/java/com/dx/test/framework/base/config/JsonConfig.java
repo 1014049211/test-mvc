@@ -11,6 +11,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 配置 Json 解析器
+ */
 @Configuration
 public class JsonConfig {
 
