@@ -14,18 +14,12 @@ public class TestRequestMappingController {
 
     /**
      * 跳转到 requestMapping 视图
+     * Tips 被 @RequestMapping 标注的方法会在 Spring 的加载过程中被包装成 HandlerMethod 类型的 Handler
      * <p>
      * Tips path/value 属性不必在开头添加 "/" , Spring 检测到不是以 "/" 开头, 会自动添加
      */
     @RequestMapping("init")
     public String init() {
-
-        /*
-         * Tips 被 @RequestMapping 标注的方法会在 Spring 的加载过程中被包装成 HandlerMethod 类型的 Handler
-         *  除了 @Controller 标注的类以外, @RequestMapping 在任何 Spring 的 Bean 中都可以生效
-         *  SpringMVC 的分层, 并不是代码意义上的分层, 而是功能上, 代码上的规范写法是为了更直观的展示项目结构
-         */
-
         // Tips 此处返回的 String 会跟 InternalResourceViewResolver 中配置的前缀和后缀组合, 作为 VIew 的 name
         return "test/requestMapping";
     }
@@ -61,6 +55,7 @@ public class TestRequestMappingController {
     /**
      * path 属性演示2
      * Tips path/value 属性的值类型是数组, 注解中的数组传值是 {} 不是 [], 当只有一个值时也可以直接传值
+     * Tips 数组中元素的关系是 "或"
      */
     @RequestMapping({"testPath2", "testPath3"})
     @ResponseBody
@@ -68,10 +63,22 @@ public class TestRequestMappingController {
         return "testPathAttribute2 处理了这个请求";
     }
 
+    /**
+     * method 属性演示
+     */
     @RequestMapping(path = "testPath1", method = RequestMethod.GET)
     @ResponseBody
-    public String testPathAttribute3(){
-        return "";
+    public String testPathAttribute3() {
+
+        /*
+         * Tips method 属性值是数组格式, 支持单个值直接传, 多个值之间匹配规则是 "或"
+         * Tips 跟 testPathAttribute1 相同的 path 值, 此时通过 method 来判断
+         *  testPathAttribute1 没有 method 属性, 相当于匹配所有请求, 包括 GET 和 POST
+         *  在 @RequestMapping 中所有属性的匹配规则都是越精确的匹配优先越高
+         *  所以 GET 请求会由当前方法处理
+         */
+
+        return "testPathAttribute3 处理了这个请求";
     }
 
 }
