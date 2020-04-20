@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ include file="/common/base.jsp" %>
 <html>
 <head>
-    <link rel="stylesheet" href="static/plugin/bootstrap/basic/css/bootstrap.min.css">
     <style>
         /*
         TIps CSS 层级选择: 两个选择期间用空格隔开
@@ -30,7 +30,7 @@
                  请求路径是 "/test" 时, 最终的请求是 localhost:8080/test
                  请求路径是 "test" 时, 最终的请求是 localhost:8080/mvc/test
                 -->
-                <a href="testRequestMapping/init">@RequestMapping</a>
+                <a href="<%=wabApp%>/testRequestMapping/init">@RequestMapping</a>
             </button>
         </div>
         <div class="col-md-3">
@@ -53,7 +53,5 @@
         </div>
     </div>
 </div>
-<script src="static/plugin/jquery/jquery.3.4.1.min.js"></script>
-<script src="static/plugin/bootstrap/basic/js/bootstrap.min.js"></script>
 </body>
 </html>
