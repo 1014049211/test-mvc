@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -148,8 +149,24 @@ public class MyMvcConfig implements WebMvcConfigurer {
      * @return RequestMappingHandlerAdapter
      */
     @Bean
-    public RequestMappingHandlerAdapter requestMappingHandlerAdapter() {
-        return new RequestMappingHandlerAdapter();
+    public RequestMappingHandlerAdapter requestMappingHandlerAdapter(FastJsonHttpMessageConverter fastJsonHttpMessageConverter) {
+        RequestMappingHandlerAdapter requestMappingHandlerAdapter = new RequestMappingHandlerAdapter();
+
+        /*
+         * Tips 此处手动设置一下 MessageConverter
+         *  因为 RequestMappingHandlerAdapter 是手动添加的, 无参构造里会使用默认四种解析器
+         *  此时 configureMessageConverters 中配置的 MessageConverter 对于 HandlerMethod 其实是白费
+         *  所以要手动设置一下
+         * TODO 想不通: 为什么自定义了 HandlerAdapter 和 HandlerMapping 以后 SpringMVC 就不加载默认的呢?
+         *  而且加载方法是 final 的, 不让重写
+         *  也没发现 SpringMVC 提供了其他的兼容办法
+         *  这非常不合理
+         */
+        List<HttpMessageConverter<?>> converters = new ArrayList<>();
+        converters.add(fastJsonHttpMessageConverter);
+        requestMappingHandlerAdapter.setMessageConverters(converters);
+
+        return requestMappingHandlerAdapter;
     }
 
     /**
