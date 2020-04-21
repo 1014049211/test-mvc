@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  * SpringMVC 会在启动时将所有 HandlerAdapter 存储起来
  * 当需要执行 Handler 时, 就遍历所有 HandlerAdapter, 通过 supports 方法判断是否可以执行这个 Handler
  * 当 supports 返回 true 时, 就调用 handle 方法来执行 Handler
- * SpringMVC 本身几部关心执行过程, 也不用知道执行规则, 只需提供数据并接收制定类型的返回值
+ * SpringMVC 本身并不关心执行过程, 也不用知道执行规则, 只需提供数据并接收指定类型的返回值
  * 这种设计不仅对 Handler 进行了解耦, 还给与开发者极大的自由
  * 这也是接口的一个重要意义和作用
  */
