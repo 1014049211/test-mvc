@@ -2,7 +2,7 @@
 <%@ include file="/common/base.jsp" %>
 <html>
 <head>
-    <title>RequestMapping 演示</title>
+    <title>@RequestMapping 演示</title>
 </head>
 <body>
 <div class="container">
@@ -13,10 +13,12 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">测试 @RequestMapping</div>
-                <div class="card-body">
-                    <form class="form-inline">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="panel-title">测试 @RequestMapping</div>
+                </div>
+                <div class="panel-body">
+                    <form class="form">
                         <div class="form-group">
                             <label for="url">请求路径</label>
                             <input id="url" type="text" class="form-control">
