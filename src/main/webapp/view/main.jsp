@@ -18,7 +18,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <div style="display: none;height: 10px;">这是一个没有灵魂的占位 DIV</div>
+            <div style="visibility: hidden;height: 10px;">这是一个没有灵魂的占位 DIV</div>
         </div>
     </div>
     <div class="row">
