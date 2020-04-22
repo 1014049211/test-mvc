@@ -12,8 +12,8 @@ import java.util.Map;
 /**
  * 处理器映射器 HandlerMapping
  * <p>
- * 注册 HandlerMapping 用于查找 Handler
- * 一个 web 请求必然包含一个 URL, HandlerMapping 就是通过 URL 来映射 Handler 的
+ * Tips HandlerMapping 用于关联 request 和 handler
+ * Tips 一个 web 请求必然包含一个 URL, HandlerMapping 就是通过 URL 来映射 Handler 的
  */
 @Configuration
 public class MyHandlerMapping {
