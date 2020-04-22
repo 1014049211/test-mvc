@@ -74,6 +74,13 @@
             <version>1.9.5</version>
         </dependency>
 
+        <!-- lombok Tips 用于简化 Model 的代码 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.12</version>
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
