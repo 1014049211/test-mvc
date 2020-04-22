@@ -74,7 +74,11 @@
             <version>1.9.5</version>
         </dependency>
 
-        <!-- lombok Tips 用于简化 Model 的代码 -->
+        <!--
+        lombok
+        Tips 用于简化 Model 的代码
+        Tips 在 Intellij Idea 中, 想要让使用了 lombok 的 Model 在开发时正常使用, 需要安装同名插件
+        -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
