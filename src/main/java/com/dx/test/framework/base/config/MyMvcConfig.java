@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
@@ -35,6 +36,7 @@ import java.util.List;
  */
 @Configuration // Tips 使用这个注解标识当前类为 Spring 的配置类
 @EnableWebMvc // Tips 在 SpringMVC 中, 不添加此注解, 重写 WebMvcConfigurer 的方法无效(如果是 SpringBoot 项目无需此注解)
+@EnableAspectJAutoProxy // Tips 开启 Spring 对 AspectJ 语法的支持
 @ComponentScan("com.dx") // Tips 告诉 Spring 都有哪些包需要扫描
 public class MyMvcConfig implements WebMvcConfigurer {
 
@@ -46,6 +48,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
     /**
      * 注册视图解析器 InternalResourceViewResolver, 用于解析 JSP 视图
      * Tips InternalResourceViewResolver 是 SpringMVC 的默认配置, 但是需要显式的写出来配置一下前后缀
+     * Tips 如果就是不想显式的写也可以, 前缀默认为 "/", 后缀默认是 ".jsp"
      *
      * @return InternalResourceViewResolver
      */
@@ -55,6 +58,8 @@ public class MyMvcConfig implements WebMvcConfigurer {
         // 设置前缀
         viewResolver.setPrefix("/view/");
         // 设置后缀
+        // Tips 其实这个后缀只是用于路径匹配文件, 对于解析文件意义不大
+        //  当使用 InternalResourceViewResolver 时, 无论后缀是什么都按照 JSP 语法来解析
         viewResolver.setSuffix(".jsp");
 
         return viewResolver;
