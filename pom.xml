@@ -10,8 +10,8 @@
     <packaging>war</packaging>
 
     <name>学习 SpringMVC</name>
-    <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
+    <!-- 这是本项目的 GitHub 地址 -->
+    <url>https://github.com/1014049211/test-mvc.git</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -55,6 +55,23 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.58</version>
+        </dependency>
+
+        <!--
+        让 Spring 支持 AspectJ 的语法
+        Tips Spring 和 AspectJ 都实现了 AOP , 但并不是一种语言
+            由于 AspectJ 的语法实在是太牛逼了, 所以 Spring 借鉴了 AspectJ 的语法, 但是底层原理是不一样的
+            Spring 用了 AspectJ 的哪些语法: 定位目标对象的语法, 也就是如何确定给哪些对象添加功能, 相当于 jQuery 选择器
+        -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>1.8.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.9.5</version>
         </dependency>
 
         <dependency>
