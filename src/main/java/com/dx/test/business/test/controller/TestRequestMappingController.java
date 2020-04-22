@@ -93,7 +93,7 @@ public class TestRequestMappingController {
     /**
      * method 属性演示
      */
-    @RequestMapping(path = "testMethod", method = RequestMethod.GET)
+    @RequestMapping(path = "testPath1", method = RequestMethod.GET)
     @ResponseBody
     public String testAttribute4() {
 
