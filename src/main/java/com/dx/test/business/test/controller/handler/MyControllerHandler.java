@@ -32,6 +32,6 @@ public class MyControllerHandler implements Controller {
         param.put("name", "小明");
         param.put("sex", "人妖");
 
-        return new ModelAndView("test/test", param);
+        return new ModelAndView("test/controllerHandler", param);
     }
 }
