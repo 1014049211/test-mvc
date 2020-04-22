@@ -5,6 +5,7 @@ import org.springframework.web.HttpRequestHandler;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * 处理器 Handler
@@ -24,6 +25,10 @@ public class MyHttpRequestHandler implements HttpRequestHandler {
      */
     @Override
     public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // 设置输出的编码集
+        response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
+        // 通知前端用什么格式解析
+        response.setHeader("Content-type", "text/html;charset=UTF-8");
         // HttpRequestHandler 类型的 Handler 直接通过 HttpServletResponse 向页面写入数据
         response.getWriter().println("这是一个 HttpRequestHandler 类型的 Handler 通过 HttpServletResponse 写入的内容");
     }
