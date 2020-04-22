@@ -23,8 +23,8 @@ public class MyHandler {
         // 通过 request 传输一个数据
         request.setAttribute("test", "这是自定义的 Handler 通过 Request 传输的数据");
 
-        // 返回指定的视图 TODO
-        return "";
+        // 返回指定的视图
+        return "test/handler";
     }
 
 }

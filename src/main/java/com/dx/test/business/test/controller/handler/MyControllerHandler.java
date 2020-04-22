@@ -29,9 +29,8 @@ public class MyControllerHandler implements Controller {
 
         // ModelAdnView 中的数据是以键值对为基础形式
         Map<String, Object> param = new HashMap<>();
-        param.put("name", "小明");
-        param.put("sex", "人妖");
+        param.put("test", "这是来自 MyControllerHandler 的数据");
 
-        return new ModelAndView("test/controllerHandler", param);
+        return new ModelAndView("test/handler", param);
     }
 }

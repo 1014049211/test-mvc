@@ -3,7 +3,7 @@
 <%@ include file="/common/base.jsp" %>
 <html>
 <head>
-    <title>这是来自 MyControllerHandler 的跳转</title>
+    <title>演示 handler</title>
 </head>
 <body>
 <div class="container">
@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    name: ${name}, sex: ${sex}
+                    ${test}
                 </div>
             </div>
         </div>
