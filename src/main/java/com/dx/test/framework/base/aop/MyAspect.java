@@ -30,6 +30,7 @@ public class MyAspect {
      *   Spring 依据 @Transactional 注解上的属性设置自动处理事务:
      *   方法开始前自动开始事务, 执行结束后自动提交事务, 发生异常时自动回滚事务
      *  5. Spring 是怎么做到 AOP 的: Spring 使用代理来实现 AOP
+     *  6. 代理原理演示在本项目的: testJava.JDKProxy.Testing
      */
 
     /**
