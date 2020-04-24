@@ -131,7 +131,7 @@ public class TestRequestMappingController {
 
     /**
      * params 属性演示3
-     * Tips 必须没有 name 这个参数, 且值必须是 "小明"
+     * Tips 必须有 name 这个参数, 且值必须是 "小明"
      */
     @RequestMapping(path = "testParams", params = "name=小明")
     @ResponseBody
@@ -141,7 +141,7 @@ public class TestRequestMappingController {
 
     /**
      * params 属性演示4
-     * Tips 必须没有 name 这个参数, 且值必须不是 "小明"
+     * Tips 必须有 name 这个参数, 且值必须不是 "小明"
      */
     @RequestMapping(path = "testParams", params = "name!=小明")
     @ResponseBody
