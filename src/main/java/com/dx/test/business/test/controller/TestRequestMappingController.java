@@ -109,4 +109,44 @@ public class TestRequestMappingController {
         return "testAttribute4 处理了这个请求";
     }
 
+    /**
+     * params 属性演示1
+     * Tips 必须有 name 这个参数
+     */
+    @RequestMapping(path = "testParams", params = "name")
+    @ResponseBody
+    public String testAttribute5() {
+        return "testAttribute5 处理了这个请求";
+    }
+
+    /**
+     * params 属性演示2
+     * Tips 必须没有 name 这个参数
+     */
+    @RequestMapping(path = "testParams", params = "!name")
+    @ResponseBody
+    public String testAttribute6() {
+        return "testAttribute6 处理了这个请求";
+    }
+
+    /**
+     * params 属性演示3
+     * Tips 必须没有 name 这个参数, 且值必须是 "小明"
+     */
+    @RequestMapping(path = "testParams", params = "name=小明")
+    @ResponseBody
+    public String testAttribute7() {
+        return "testAttribute7 处理了这个请求";
+    }
+
+    /**
+     * params 属性演示4
+     * Tips 必须没有 name 这个参数, 且值必须不是 "小明"
+     */
+    @RequestMapping(path = "testParams", params = "name!=小明")
+    @ResponseBody
+    public String testAttribute8() {
+        return "testAttribute8 处理了这个请求";
+    }
+
 }
