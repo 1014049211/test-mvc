@@ -1,10 +1,7 @@
 package com.dx.test.business.test.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 演示 @RequestMapping 用法的 Controller
@@ -151,6 +148,30 @@ public class TestRequestMappingController {
     @ResponseBody
     public String testAttribute8() {
         return "testAttribute8 处理了这个请求";
+    }
+
+
+    /**
+     * 演示 @RequestParam
+     */
+    @RequestMapping("testRequestParam")
+    @ResponseBody
+    public String testAttribute9(@RequestParam("name") String name, Integer age,
+                                 @RequestParam(value = "sex", defaultValue = "人妖") String sex) {
+
+        /*
+         * Tips 注解 @RequestParam 获取数据的原理就是 request.getParameter
+         *
+         * Tips 注解了 @RequestParam 的参数默认必须有, 可以设置属性 required 为 false 来允许空值
+         *  还可以使用 default 来设置当参数为空时默认使用什么值
+         *  如果设置了 default, required 就相当于 false
+         *
+         * Tips 声明在 HandlerMethod 上的参数, 如果没有任何注解, 那么默认的隐式添加 @RequestParam 注解
+         *  也就是没有任何注解的参数就是通过 request.getParameter 方法获取的, key 就是 参数名
+         *  隐式添加的 @RequestParam, required 属性为 false, 允许参数为空
+         */
+
+        return "testAttribute9 处理了这个请求: name = " + name + ", age = " + age + ", sex = " + sex;
     }
 
 }

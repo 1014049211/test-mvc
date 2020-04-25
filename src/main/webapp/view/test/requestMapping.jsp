@@ -42,6 +42,12 @@
                                     <option>/testRequestMapping/testParams?name=小明</option>
                                     <option>/testRequestMapping/testParams?name=小红</option>
                                 </optgroup>
+                                <optgroup label="测试 requestParam">
+                                    <option>/testRequestMapping/testRequestParam</option>
+                                    <option>/testRequestMapping/testRequestParam?name=小明</option>
+                                    <option>/testRequestMapping/testRequestParam?name=小明&age=18</option>
+                                    <option>/testRequestMapping/testRequestParam?name=小明&age=18&sex=男</option>
+                                </optgroup>
                             </select>
                         </div>
                         <div class="form-group">
