@@ -133,7 +133,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
      * Tips 当配置了自定义的 HandlerMapping 以后, SpringMVC 将不再加载默认的 HandlerMapping
      * <p>
      * Tips SpringMVC 默认的 HandlerMapping
-     * SpringMVC 默认的 HandlerMapping 配置在 DispatchServlet.properties 中
+     * SpringMVC 默认的 HandlerMapping 配置在 DispatcherServlet.properties 中
      * key 是 org.springframework.web.servlet.HandlerMapping
      *
      * @return RequestMappingHandlerMapping
@@ -148,7 +148,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
      * Tips 当配置了自定义的 HandlerAdapter 以后, SpringMVC 将不再加载默认的 HandlerAdapter
      * <p>
      * Tips SpringMVC 默认的 HandlerAdapter
-     * SpringMVC 默认的 HandlerAdapter 配置在 DispatchServlet.properties 中
+     * SpringMVC 默认的 HandlerAdapter 配置在 DispatcherServlet.properties 中
      * key 是 org.springframework.web.servlet.HandlerAdapter
      *
      * @return RequestMappingHandlerAdapter
