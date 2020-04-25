@@ -5,7 +5,7 @@
     <title>@RequestMapping 演示</title>
 </head>
 <body>
-<div class="container">
+<div id="app" class="container">
     <div class="row">
         <div class="col-md-12">
             <div style="visibility: hidden;height: 10px;">这是一个没有灵魂的占位 DIV</div>
@@ -20,8 +20,29 @@
                 <div class="panel-body">
                     <form class="form">
                         <div class="form-group">
-                            <label for="url">请求路径</label>
-                            <input id="url" type="text" class="form-control">
+                            <label for="editUrl">填写路径</label>
+                            <label><input type="radio" name="urlType" value="editUrl" v-model="selectedRadio"></label>
+                            <input id="editUrl" type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="selectUrl">选择路径</label>
+                            <label><input type="radio" name="urlType" value="selectUrl" v-model="selectedRadio"></label>
+                            <select id="selectUrl" type="text" class="selectpicker form-control" disabled>
+                                <optgroup label="测试 path">
+                                    <option>/testRequestMapping/testPath1</option>
+                                    <option>/testRequestMapping/testPath2</option>
+                                    <option>/testRequestMapping/testPath3</option>
+                                    <option>/testRequestMapping/testPath4/小明/18</option>
+                                </optgroup>
+                                <optgroup label="测试 method">
+                                    <option>/testRequestMapping/testPath1</option>
+                                </optgroup>
+                                <optgroup label="测试 params">
+                                    <option>/testRequestMapping/testParams</option>
+                                    <option>/testRequestMapping/testParams?name=小明</option>
+                                    <option>/testRequestMapping/testParams?name=小红</option>
+                                </optgroup>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="requestType">请求方式</label>
@@ -46,11 +67,28 @@
 </div>
 <script>
 
+    // 构建 vue 数据模型
+    var app = new Vue({
+        el: "#app",
+        data: {
+            // 选中的 radio 值
+            selectedRadio: "editUrl"
+        }
+    });
+
+    // 监听 radio 值, 切换输入地址和选择地址的可编辑状态
+    app.$watch("selectedRadio", function (oldValue, newValue) {
+        $("#" + oldValue).removeAttr("disabled");
+        $("#" + newValue).attr("disabled", "disabled");
+        $('.selectpicker').selectpicker('refresh');
+    });
+
     /**
      * 测试 @RequestMapping
      */
     function testRequestMapping() {
-        let url = $("#url").val() || "";
+        // 根据选中的 radio 的值来确定获取哪个 url
+        let url = $("#" + $("input:radio[name='urlType']:checked").val()).val() || "";
         if (url === "") {
             layer.msg("请输入请求地址!");
             return;
