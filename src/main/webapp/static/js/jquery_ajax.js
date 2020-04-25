@@ -55,11 +55,14 @@ function ajaxRequest_all(url, async, type, contentType, data, dataType,
         index = layer.load(1);
     }
 
+    // 数据空值处理
+    data = data || {};
+
     // Tips jQuery 在 3.5.0 以后, url 参数已经挪到 options 外面了
     $.ajax(wabApp + url, {
         async: async !== false, // 是否异步
         type: type || "POST", // 请求类型
-        data: data || {}, // 参数
+        data: contentType.search("json") === -1 ? data : JSON.stringify(data), // 参数
         contentType: contentType || "application/x-www-form-urlencoded;charset=UTF-8", // 发送的数据类型
         dataType: dataType || "json", // 接受的返回值类型
         beforeSend: function (XHR) {
