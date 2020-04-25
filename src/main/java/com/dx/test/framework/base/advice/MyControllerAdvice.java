@@ -39,6 +39,7 @@ public class MyControllerAdvice {
 
         System.out.println("[ExceptionHandler] " + handlerMethod.getMethod().getName()
                 + " 发生了异常: " + exception.getMessage());
+        exception.printStackTrace();
 
         // 设置返回的数据
         Map<String, Object> resultMap = new HashMap<>();
