@@ -115,6 +115,7 @@ public class TestRequestMappingController {
      * Tips 与 testAttribute8 冲突, 加 method 加进一步区分
      */
     @RequestMapping(path = "testParams", params = "name", method = RequestMethod.GET)
+//    @GetMapping(path = "testParams", params = "name")
     @ResponseBody
     public String testAttribute5() {
         return "testAttribute5 处理了这个请求";
@@ -126,6 +127,7 @@ public class TestRequestMappingController {
      * Tips 与 testAttribute7 冲突, 加 method 加进一步区分
      */
     @RequestMapping(path = "testParams", params = "!name", method = RequestMethod.GET)
+//    @GetMapping(path = "testParams", params = "!name")
     @ResponseBody
     public String testAttribute6() {
         return "testAttribute6 处理了这个请求";
