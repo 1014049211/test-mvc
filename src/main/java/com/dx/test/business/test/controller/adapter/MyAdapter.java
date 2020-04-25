@@ -61,6 +61,9 @@ public class MyAdapter implements HandlerAdapter {
         MyHandler myHandler = (MyHandler) handler;
 
         // 提供方法所需要的参数, 执行业务逻辑, 获得返回的视图名称
+        // Tips SpringMVC 默认的组件中, 根据 Handler 参数类型拼凑数据的任务是由 ArgumentResolver 来解决的
+        // Tips HandlerMethod 对应的 ArgumentResolver 是 HandlerMethodArgumentResolver
+        // TODO ArgumentResolver
         String viewName = myHandler.handle(request);
 
         // 通过返回 ModelAndView 来告诉 SpringMVC 要跳转的视图和需要传递的数据
