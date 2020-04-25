@@ -21,6 +21,7 @@ public class MyControllerAdvice {
 
     /**
      * Tips @ExceptionHandler 标注的方法可以处理控制器中 @RequestMapping 标注的 Handler 抛出的异常
+     * TODO 还未到 Handler 就已经发生的异常如何处理?
      *
      * @param request       HttpServletRequest
      * @param handlerMethod 抛出异常的 Handler, HandlerMethod 类型
