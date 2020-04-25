@@ -6,6 +6,12 @@
 <!-- CSS -->
 <link rel="stylesheet" href="<%=wabApp%>/static/plugin/bootstrap/basic/css/bootstrap.min.css">
 <link rel="stylesheet" href="<%=wabApp%>/static/plugin/bootstrap/select/css/bootstrap-select.min.css">
+<style>
+    /* 解决网络卡顿导致 vue 加载缓慢从而在页面显示{{代码}}的问题 */
+    [v-cloak]{
+        display: none;
+    }
+</style>
 
 <!-- JavaScript -->
 <script src="<%=wabApp%>/static/plugin/jquery/jquery.3.5.0.min.js"></script>
