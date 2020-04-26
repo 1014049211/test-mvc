@@ -32,6 +32,8 @@ public class JsonConfig {
         config.setCharset(StandardCharsets.UTF_8);
         // 序列化规则
         config.setSerializerFeatures(
+                // Enum 类型转为 Json 时, 使用 toString 方法来转换
+                SerializerFeature.WriteEnumUsingToString,
                 // 值为 null 的属性也会输出
                 SerializerFeature.WriteMapNullValue,
                 // 将空的集合输出为 []
