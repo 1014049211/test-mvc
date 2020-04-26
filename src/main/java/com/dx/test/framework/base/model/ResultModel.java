@@ -75,19 +75,11 @@ public class ResultModel {
     }
 
     /**
-     * Tips 设置枚举类不参与 Json 转换
+     * Tips 设置 returnCode 不参与 Object 转 Json 的过程
      */
     @JSONField(serialize = false)
     public ReturnCodeEnum getReturnCode() {
         return this.returnCode;
-    }
-
-    /**
-     * Tips 设置枚举类不参与 Json 转换
-     */
-    @JSONField(serialize = false)
-    public void setReturnCode(ReturnCodeEnum returnCode) {
-        this.returnCode = returnCode;
     }
 
 }
