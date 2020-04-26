@@ -42,12 +42,6 @@
                                     <option>/testRequestMapping/testParams?name=小明</option>
                                     <option>/testRequestMapping/testParams?name=小红</option>
                                 </optgroup>
-                                <optgroup label="测试 requestParam">
-                                    <option>/testRequestMapping/testRequestParam</option>
-                                    <option>/testRequestMapping/testRequestParam?name=小明</option>
-                                    <option>/testRequestMapping/testRequestParam?name=小明&age=18</option>
-                                    <option>/testRequestMapping/testRequestParam?name=小明&age=18&sex=男</option>
-                                </optgroup>
                             </select>
                         </div>
                         <div class="form-group">
@@ -101,7 +95,7 @@
         }
 
         ajaxRequest_all(url, true, $("#requestType").val(), $("#contentType").val()
-            , null, null, null, null, function (result) {
+            , {name: "小明", age: 18, gender: "男", birthday: "2020-04-01"}, null, null, null, function (result) {
                 // 展示结果
                 layer.alert(typeof result == "string" ? result : "结果已打印到控制台, 请按 F12 键查看");
                 console.log(result);
