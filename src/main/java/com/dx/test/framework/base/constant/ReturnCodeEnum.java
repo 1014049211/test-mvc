@@ -56,4 +56,9 @@ public enum ReturnCodeEnum {
     public String getCode() {
         return code;
     }
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }
