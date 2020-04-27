@@ -36,6 +36,11 @@ public class UserModel {
     private Date date;
 
     /**
+     * 联系方式
+     */
+    private ContactModel contact;
+
+    /**
      * Tips Json 转 Object 时, gender 属性使用此方法
      */
     @JSONField(name = "gender")
