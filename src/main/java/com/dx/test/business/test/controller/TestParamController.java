@@ -70,6 +70,8 @@ public class TestParamController {
     @RequestMapping("testRequestBody")
     @ResponseBody
     public ResultModel testRequestBody(@RequestBody UserModel userModel) {
+        // Tips @RequestBody 和 @ResponseBody 都是基于 HttpMessageConverter
+        // TODO HttpMessageConverter ???
         return new ResultModel(userModel);
     }
 
