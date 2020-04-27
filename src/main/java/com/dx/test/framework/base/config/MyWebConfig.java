@@ -2,8 +2,10 @@ package com.dx.test.framework.base.config;
 
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 
+import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
 
@@ -28,6 +30,7 @@ public class MyWebConfig implements WebApplicationInitializer {
     @Override
     public void onStartup(ServletContext servletContext) {
 
+        // --------------- 配置 SpringMVC ---------------
         // 注册 Spring 容器, 使用基于注解配置并支持 web 项目的 AnnotationConfigWebApplicationContext
         AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext();
         // 设置主配置类
@@ -45,5 +48,11 @@ public class MyWebConfig implements WebApplicationInitializer {
         servlet.addMapping("/");
         // 设置 DispatchServlet 随着 web 容器一同启动
         servlet.setLoadOnStartup(1);
+
+        // --------------- 添加一个过滤器, 用于解决 form 提交的中文数据乱码问题 ---------------
+        FilterRegistration.Dynamic filterRegistration = servletContext.addFilter(
+                "characterEncodingFilter", new CharacterEncodingFilter("UTF-8", true)
+        );
+        filterRegistration.addMappingForUrlPatterns(null, true, "/");
     }
 }
