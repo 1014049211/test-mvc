@@ -65,6 +65,7 @@ public class TestParamController {
 
     /**
      * 演示 @RequestBody
+     * Tips 同一个 Handler 的参数中, @RequestBody 只能使用一次, 因为 Request 中的数据流是单向的, 只能读取一次
      */
     @RequestMapping("testRequestBody")
     @ResponseBody
