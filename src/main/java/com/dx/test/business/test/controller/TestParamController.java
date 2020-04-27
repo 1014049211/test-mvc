@@ -1,6 +1,7 @@
 package com.dx.test.business.test.controller;
 
 import com.dx.test.business.test.model.UserModel;
+import com.dx.test.framework.base.model.ResultModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,10 +43,10 @@ public class TestParamController {
     /**
      * 演示 @RequestParam
      */
-    @RequestMapping("testRequestParam")
+    @RequestMapping(path = "testRequestParam", produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String testRequestParam(@RequestParam("name") String name, Integer age,
-                                   @RequestParam(value = "sex", defaultValue = "人妖") String sex) {
+                                   @RequestParam(value = "gender", defaultValue = "人妖") String gender) {
 
         /*
          * Tips 注解 @RequestParam 获取数据的原理就是 request.getParameter
@@ -59,7 +60,7 @@ public class TestParamController {
          *  隐式添加的 @RequestParam, required 属性为 false, 允许参数为空
          */
 
-        return "处理了这个请求: name = " + name + ", age = " + age + ", sex = " + sex;
+        return "name = " + name + ", age = " + age + ", gender = " + gender;
     }
 
     /**
@@ -67,8 +68,18 @@ public class TestParamController {
      */
     @RequestMapping("testRequestBody")
     @ResponseBody
-    public UserModel testRequestBody(@RequestBody UserModel userModel) {
-        return userModel;
+    public ResultModel testRequestBody(@RequestBody UserModel userModel) {
+        return new ResultModel(userModel);
+    }
+
+    /**
+     * 不使用 @RequestBody 接收复杂对象
+     * Tips 没有 @RequestBody 注解的复杂对象在接收数据时, 只能做基本的类型转换, 是无法将 String 转为 Enum 的
+     */
+    @RequestMapping("testComplexity")
+    @ResponseBody
+    public ResultModel testComplexity(UserModel userModel) {
+        return new ResultModel(userModel);
     }
 
 }
