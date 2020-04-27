@@ -28,6 +28,19 @@ function ajaxRequest_get(url, data, successCallback) {
 }
 
 /**
+ * json 请求
+ * @param url 请求路径
+ * @param data 发送的数据
+ * @param successCallback 请求发送成功后执行的方法, 成功指请求本身, 与业务的结果无关
+ *  只支持 function 类型, 业务的返回数据会作为参数传入
+ */
+function ajaxRequest_json(url, data, successCallback) {
+    ajaxRequest_all(url, null, "POST", "application/json;charset=UTF-8",
+        data, "json", null, null, successCallback
+    );
+}
+
+/**
  * Tips Ajax 请求
  *
  * @param url 请求地址
