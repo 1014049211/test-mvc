@@ -45,6 +45,16 @@ public class ResultModel {
     }
 
     /**
+     * 数据构造, 默认成功
+     *
+     * @param data 数据
+     */
+    public ResultModel(Object data) {
+        this.returnCode = ReturnCodeEnum.SUCCESS;
+        this.data = data;
+    }
+
+    /**
      * 返回码和提示语构造
      *
      * @param returnCode 返回码
