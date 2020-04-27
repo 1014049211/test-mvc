@@ -18,7 +18,7 @@
                     <div class="panel-title">测试 @RequestMapping</div>
                 </div>
                 <div class="panel-body">
-                    <form class="form">
+                    <form>
                         <div class="form-group">
                             <label for="editUrl">填写路径</label>
                             <label><input type="radio" name="urlType" value="editUrl" v-model="selectedRadio"></label>
