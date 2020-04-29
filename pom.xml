@@ -74,6 +74,20 @@
             <version>1.9.5</version>
         </dependency>
 
+        <!-- Spring 对于 Redis 的支持 -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+            <version>2.2.6.RELEASE</version>
+        </dependency>
+
+        <!-- Redis 官方推荐的 Java 端操作 Redis 的 API -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+
         <!--
         lombok
         Tips 用于简化 Model 的代码
