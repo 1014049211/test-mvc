@@ -88,6 +88,13 @@
             <version>3.2.0</version>
         </dependency>
 
+        <!-- Java 对于 JMS 的支持 -->
+        <dependency>
+            <groupId>javax.jms</groupId>
+            <artifactId>javax.jms-api</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+
         <!-- Spring 对于 JMS 标准的支持 -->
         <dependency>
             <groupId>org.springframework</groupId>
