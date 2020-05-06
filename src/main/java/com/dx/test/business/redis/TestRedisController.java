@@ -18,7 +18,10 @@ public class TestRedisController {
      * 页面初始化
      */
     @RequestMapping("init")
-    public String init() {
+    public String init() throws Exception {
+        if (!RedisUtil.hasContent()) {
+            throw new Exception("没有可用的 Redis 服务！");
+        }
         return "test/redis";
     }
 
