@@ -23,9 +23,9 @@ import redis.clients.jedis.JedisPoolConfig;
 public class RedisConfig {
 
     // 默认的服务地址
-    private static final String DEFAULT_HOST = "127.0.0.1";
+    protected static final String DEFAULT_HOST = "127.0.0.1";
     // 默认端口号
-    private static final int DEFAULT_PORT = 6379;
+    protected static final int DEFAULT_PORT = 6379;
 
     // 地址
     private String host;
