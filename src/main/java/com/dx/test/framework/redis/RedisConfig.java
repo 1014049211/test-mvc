@@ -1,6 +1,7 @@
 package com.dx.test.framework.redis;
 
 import com.dx.test.framework.base.util.DateUtil;
+import com.dx.test.framework.base.util.StringUtil;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +21,11 @@ import redis.clients.jedis.JedisPoolConfig;
 @Configuration
 @PropertySource("classpath:properties/redis.properties") // Tips @PropertySource 可以加载 properties 文件里的内容
 public class RedisConfig {
+
+    // 默认的服务地址
+    private static final String DEFAULT_HOST = "127.0.0.1";
+    // 默认端口号
+    private static final int DEFAULT_PORT = 6379;
 
     // 地址
     private String host;
@@ -111,23 +117,17 @@ public class RedisConfig {
     // Tips @Value 可以将读取到的配置信息赋值给属性或作为参数传递给 set 方法
     @Value("${redis.host}")
     public void setHost(String host) {
-        if (this.host == null) {
-            if (host == null) {
-                this.host = "127.0.0.1";
-            } else {
-                this.host = host;
-            }
+        if (this.host != null) {
+            return;
         }
+        this.host = StringUtil.isEmpty(host) ? DEFAULT_HOST : host;
     }
 
     @Value("${redis.port}")
     public void setPort(Integer port) {
-        if (this.port == null) {
-            if (port == null) {
-                this.port = 6379;
-            } else {
-                this.port = port;
-            }
+        if (this.port != null) {
+            return;
         }
+        this.port = port == null ? DEFAULT_PORT : port;
     }
 }
