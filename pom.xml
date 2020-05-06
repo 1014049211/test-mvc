@@ -88,6 +88,28 @@
             <version>3.2.0</version>
         </dependency>
 
+        <!-- Spring 对于 JMS 标准的支持 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
+            <version>5.2.5.RELEASE</version>
+        </dependency>
+
+        <!-- ActiveMQ -->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-core</artifactId>
+            <version>5.7.0</version>
+        </dependency>
+
+        <!-- ActiveMQ pool -->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-pool</artifactId>
+            <version>5.15.12</version>
+        </dependency>
+
+
         <!--
         lombok
         Tips 用于简化 Model 的代码
