@@ -1,11 +1,10 @@
 package com.dx.test.framework.redis;
 
+import com.dx.test.framework.base.util.StringUtil;
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.core.env.Environment;
 import org.springframework.core.type.AnnotatedTypeMetadata;
-
-import java.util.Objects;
 
 /**
  * 是否加载 Redis 的判断依据
@@ -25,9 +24,22 @@ public class RedisCondition implements Condition {
         try {
             // 获取环境
             Environment environment = context.getEnvironment();
-            // 通过环境读取配置文件中的 redis 地址和端口号, 并验证 redis 是否可以连接
-            return RedisUtil.hasContent(environment.getProperty("redis.host"),
-                    Integer.parseInt(Objects.requireNonNull(environment.getProperty("redis.port"))));
+
+            // 获取 Redis 服务的地址
+            String host = environment.getProperty("redis.host");
+            if (StringUtil.isEmpty(host)) {
+                host = RedisConfig.DEFAULT_HOST;
+            }
+
+            // 获取 Redis 服务的端口号
+            int port = RedisConfig.DEFAULT_PORT;
+            String portStr = environment.getProperty("redis.port");
+            if (!StringUtil.isEmpty(portStr)) {
+                port = Integer.parseInt(portStr);
+            }
+
+            // 验证 redis 是否可以连接
+            return RedisUtil.hasContent(host, port);
         } catch (Exception e) {
             return false;
         }
