@@ -1,7 +1,6 @@
 package com.dx.test.framework.redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -51,6 +50,19 @@ public class RedisUtil {
         // Tips 每次都新建链接, 大量使用的时候性能差
         try {
             return "PONG".equalsIgnoreCase(new Jedis(host, port).ping());
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * 监测 Redis 是不是挂了
+     *
+     * @return 能 ping 就返回 true, 其余返回 false;
+     */
+    public static boolean hasContent() {
+        try {
+            return "PONG".equalsIgnoreCase(new Jedis(RedisConfig.getHost(), RedisConfig.getPort()).ping());
         } catch (Exception e) {
             return false;
         }
@@ -130,8 +142,7 @@ public class RedisUtil {
         }
     }
 
-    @Autowired
-    @Conditional(RedisCondition.class) // Tips 根据条件判断是否注入
+    @Autowired(required = false)
     public void setJedisPool(JedisPool jedisPool) {
 
         /*
