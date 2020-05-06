@@ -20,6 +20,10 @@ import redis.clients.jedis.Response;
 //  如果当前 Bean 在 RedisConfig 前加载(Spring 的默认加载是无序的), 条件判断读取不到配置文件一定会返回 false
 //  导致当前 Bean 中使用 @Autowired 标记的依赖无法注入
 @DependsOn("redisConfig")
+//@Conditional(RedisCondition.class)
+// Tips 条件放在这是无效的, 因为是否注册的优先级比怎么注册高
+//  Spring 会先根据 @Conditional 去判断是否注册, 再根据 @DependsOn 解析怎么注册
+//  此时 RedisCondition 中读取不到 RedisConfig 里加载的配置文件, 条件一定不成立
 public class RedisUtil {
 
     /**
