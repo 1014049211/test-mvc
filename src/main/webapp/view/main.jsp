@@ -44,9 +44,8 @@
             </button>
         </div>
         <div class="col-md-3">
-            <button type="button" class="btn btn-primary btn-lg btn-block"
-                    onclick="">
-                预留
+            <button type="button" class="btn btn-primary btn-lg btn-block">
+                <a href="<%=wabApp%>/testActivemq/init">ActiveMQ</a>
             </button>
         </div>
     </div>
