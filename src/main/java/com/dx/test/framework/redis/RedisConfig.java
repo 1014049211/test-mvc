@@ -28,10 +28,10 @@ public class RedisConfig {
     protected static final int DEFAULT_PORT = 6379;
 
     // 地址
-    private String host;
+    private static String host;
 
     // 端口号
-    private Integer port;
+    private static Integer port;
 
     /**
      * Jedis 连接池配置
@@ -117,17 +117,25 @@ public class RedisConfig {
     // Tips @Value 可以将读取到的配置信息赋值给属性或作为参数传递给 set 方法
     @Value("${redis.host}")
     public void setHost(String host) {
-        if (this.host != null) {
+        if (RedisConfig.host != null) {
             return;
         }
-        this.host = StringUtil.isEmpty(host) ? DEFAULT_HOST : host;
+        RedisConfig.host = StringUtil.isEmpty(host) ? DEFAULT_HOST : host;
+    }
+
+    protected static String getHost() {
+        return host;
     }
 
     @Value("${redis.port}")
     public void setPort(Integer port) {
-        if (this.port != null) {
+        if (RedisConfig.port != null) {
             return;
         }
-        this.port = port == null ? DEFAULT_PORT : port;
+        RedisConfig.port = port == null ? DEFAULT_PORT : port;
+    }
+
+    protected static Integer getPort() {
+        return port;
     }
 }
