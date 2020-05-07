@@ -116,7 +116,6 @@
             <version>5.15.12</version>
         </dependency>
 
-
         <!--
         lombok
         Tips 用于简化 Model 的代码
@@ -126,6 +125,13 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.12</version>
+        </dependency>
+
+        <!-- logback -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
         </dependency>
 
         <dependency>

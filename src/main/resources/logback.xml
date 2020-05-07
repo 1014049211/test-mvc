@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+Tips 引入 logback-classic 以后, 放置在 classpath(resources 文件夹) 的 logback.xml 会被自动加载
+    如果 logback.xml 不存在, 会默认调用 BasicConfigurator, 创建一个最小化配置
+    默认输出用模式为 %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n 的 PatternLayoutEncoder
+    默认输出级别为 debug
+
+Tips 日志的输出级别从第到高: trace < debug < info < warn < error, 低级别自动兼容高级别
+    例如设置为 info 时, warn 和 error 的内容也会输出
+    此外还有 all 和 off 代表输出所有和不输出
+    在 logback.xml 中, 代表日志输出级别的值不区分大小写
+    输出级别的定义在 ch.qos.logback.classic.Level
+-->
+
+<!--
+Tips configuration 是 logback.xml 的根节点, 有三个主要属性:
+    scan: 配置文件发生改变时, 是否重新加载. 默认 true
+    scanPeriod: 检测配置文件是否改变的间隔, 当 scan 为 true 时才生效. 默认单位毫秒, 默认间隔 1 分钟
+    debug: 是否打印 logback 自身的运行日志. 默认 false
+-->
+<configuration scan="true" scanPeriod="1 seconds" debug="false">
+
+    <!-- Tips contextName 用于设置 logback 上下文名称, 用于区分不用的应用程序 -->
+    <contextName>test-mvc</contextName>
+
+    <!--
+    Tips 使用 property 可以定义 xml 中使用的变量(类似 maven 中 properties)
+        有两个属性: name 代表变量名, value 代表变量值
+        使用时, 通过 ${name} 引用
+    Tips 注意 value 中的内容, \t \n \l等会被输出为特殊符号, 需要使用 \\ 转义
+    -->
+    <!-- 日志保存的目录 -->
+    <property name="log_directory" value="D:\\logs\\test-mvc"/>
+    <!-- 日志保留多长时间, 单位天 -->
+    <property name="log_time_to_live" value="30"/>
+    <!-- 单个日志文件的最大容量 -->
+    <property name="log_max_size" value="10MB"/>
+    <!-- 全局日志打印级别 -->
+    <property name="root_level" value="debug"/>
+
+    <!-- 将日志输出到控制台 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>logback: [%d{HH:mm:ss.SSS}] [%-5level] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- error 级别的日志除了在 info 中记录以外, 再单独输出到一个文件中 -->
+    <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log_directory}/error/%d.%i.log</fileNamePattern>
+            <maxFileSize>${log_max_size}</maxFileSize>
+        </rollingPolicy>
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%thread] [%-5level] %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Tips appender 用于定义日志的输出规则, name 标记此 appender 的名字, class 设置使用哪个类 -->
+    <!-- Tips RollingFileAppender 用于将日志的滚动记录, 可以在某些条件符合以后, 将日志存储到新的文件中 -->
+    <appender name="trace" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- Tips 使用 filter 可以对日志进行过滤 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- Tips 过滤级别, 此处设置只处理大于等于 INFO 级别的日志 -->
+            <level>TRACE</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <!-- Tips rollingPolicy 用于设置滚动策略, 需要通过 class 属性配置策略类 -->
+        <!-- Tips SizeAndTimeBasedRollingPolicy 的策略: 根据文件大小和时间滚动-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--
+            Tips fileNamePattern 设置日志文件滚动时的命名规则
+                %d 代表 yyyy-MM-dd 格式的日期, 可以在后面添加 {} 来指定日期格式, 例如 %d{yyyy-MM} 表示 "年-月" 格式的日期
+                %i 代表索引, 当日志文件超过指定的单个文件容量而发生滚动时, 同一时间点的多个文件的索引从 0 开始递增
+            -->
+            <fileNamePattern>${log_directory}/trace/%d.%i.log</fileNamePattern>
+            <!-- Tips maxHistory 设置文件最多保留多久, 可以为空代表一直保留, 此处不设置了 -->
+            <!-- Tips 单个文件最大容量 -->
+            <maxFileSize>${log_max_size}</maxFileSize>
+        </rollingPolicy>
+        <encoder>
+            <!--
+            Tips pattern 规则:
+                %d 代表 yyyy-MM-dd 格式的日期, 可以在后面添加 {} 来指定日期格式, 例如 %d{yyyy-MM} 表示 "年-月" 格式的日期
+                %thread 产生日志的线程
+                %-5level 日志输出级别, 最多输出 5 个字符
+                %logger{50} 产生日志的 logger 包路径, 最多 50 个字符, 路径很长时, 为了压缩在 50 个字符以内, 包路径会使用首字母缩写
+                %msg 日志内容
+                %n 换行
+            -->
+            <pattern>[%d{yyyy-MM-dd hh:mm:ss.SSS}] [%thread] [%-5level] %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--
+    Tips logger 可以指定某个包或者类来单独配置日志处理方式, 有三个属性
+        name: 指定单独配置的包或者类
+        level: 设置打印级别, 不设置时继承上级的
+        additivity: 是否向上级传递打印信息, 默认 true
+    -->
+    <!-- 设置 Spring 和 ActiveMQ 相关的组件只打印 warn 以及更严重的信息 -->
+    <logger name="org.springframework" level="warn"/>
+    <logger name="org.apache.activemq" level="warn"/>
+
+    <!-- Tips root 相当于 logger 的最上级, 只能有一个. 用于设置全局日志打印 -->
+    <root level="${root_level}">
+        <appender-ref ref="console"/>
+        <appender-ref ref="error"/>
+        <appender-ref ref="trace"/>
+    </root>
+
+</configuration>
