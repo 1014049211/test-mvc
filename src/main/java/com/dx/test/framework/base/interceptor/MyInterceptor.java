@@ -1,5 +1,7 @@
 package com.dx.test.framework.base.interceptor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,8 +35,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class MyInterceptor implements HandlerInterceptor {
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     // 打印消息时使用的前缀
-    private static final String PREFIX = "[MyInterceptor] ";
+    private final String prefix = "[MyInterceptor] ";
 
     /**
      * 前置方法, 在 Handler 执行前调用
@@ -46,7 +50,7 @@ public class MyInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        System.out.println(PREFIX + request.getRequestURI() + " 进入 preHandle 方法");
+        System.out.println(prefix + request.getRequestURI() + " 进入 preHandle 方法");
 
         // 将当前时间放入 request 中用于统计 Handler 的执行时间
         request.setAttribute("MyInterceptor_startTime", System.currentTimeMillis());
@@ -71,7 +75,7 @@ public class MyInterceptor implements HandlerInterceptor {
      */
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable ModelAndView modelAndView) {
-        System.out.println(PREFIX + request.getRequestURI() + " 进入 postHandle 方法");
+        System.out.println(prefix + request.getRequestURI() + " 进入 postHandle 方法");
 
         // 记录每次请求的处理用时
         this.recordUsedTime(request);
@@ -90,8 +94,8 @@ public class MyInterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable Exception e) {
         // 当 Handler 抛出了异常时
         if (e != null) {
-            // 记录异常 TODO 此处可以考虑发邮件或者录入数据库
-            System.out.println(PREFIX + request.getRequestURI() + " 因发生异常而结束: " + e.getMessage());
+            // 记录异常日志 TODO 此处可以考虑发邮件或者录入数据库
+            logger.error(prefix + request.getRequestURI() + " 因发生异常而结束: " + e.getMessage(), e);
             // 记录用时: 如果发生了异常, 不会调用 postHandle 方法, 所以要在这里记录
             this.recordUsedTime(request);
         }
@@ -114,20 +118,20 @@ public class MyInterceptor implements HandlerInterceptor {
         }
 
         // 请求路径拼装到前缀中
-        String prefix = PREFIX + request.getRequestURI();
+        String prefix = this.prefix + request.getRequestURI();
 
         // 计算用时
         if (startTime == null) {
-            System.out.println(prefix + " 没有获取到处理的开始时间, 无法计算!");
+            logger.warn(prefix + " 没有获取到处理的开始时间, 无法计算!");
         } else {
             // 计算用时
             long usedTime = System.currentTimeMillis() - startTime;
             // 输出
-            System.out.println(prefix + " 的处理时间为: " + usedTime + " 毫秒");
+            logger.info(prefix + " 的处理时间为: " + usedTime + " 毫秒");
             // 处理时间超过 10 秒判定为处理缓慢
             if (usedTime > 10000) {
                 // TODO 此处可以考虑发邮件或者录入数据库
-                System.out.println(prefix + " 的处理异常缓慢!");
+                logger.warn(prefix + " 的处理异常缓慢!");
             }
         }
     }
