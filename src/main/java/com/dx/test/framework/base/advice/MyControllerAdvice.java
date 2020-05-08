@@ -1,8 +1,11 @@
 package com.dx.test.framework.base.advice;
 
+import com.dx.test.framework.base.exception.BusinessException;
 import com.dx.test.framework.base.model.MyJsonView;
 import com.dx.test.framework.base.util.HttpUtil;
 import com.dx.test.framework.base.util.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.HandlerMethod;
@@ -18,6 +21,8 @@ import java.util.Map;
  */
 @ControllerAdvice
 public class MyControllerAdvice {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * Tips @ExceptionHandler 标注的方法可以处理控制器中 @RequestMapping 标注的 Handler 抛出的异常
@@ -37,9 +42,11 @@ public class MyControllerAdvice {
          *  如果写在普通的 @Controller 标注的 Bean, 则作用范围就是所在 Bean
          */
 
-        System.out.println("[ExceptionHandler] " + handlerMethod.getMethod().getName()
-                + " 发生了异常: " + exception.getMessage());
-        exception.printStackTrace();
+        // 非业务类的异常记录异常日志
+        if (!(exception instanceof BusinessException)) {
+            logger.error("[ExceptionHandler] " + handlerMethod.getMethod().getName()
+                    + " 发生了异常: " + exception.getMessage(), exception);
+        }
 
         // 设置返回的数据
         Map<String, Object> resultMap = new HashMap<>();
