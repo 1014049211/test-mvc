@@ -12,7 +12,7 @@
         }
 
     </style>
-    <title>Title</title>
+    <title>主页</title>
 </head>
 <body>
 <div class="container">
