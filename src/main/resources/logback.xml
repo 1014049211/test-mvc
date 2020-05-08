@@ -9,7 +9,7 @@ Tips 引入 logback-classic 以后, 放置在 classpath(resources 文件夹) 的
 Tips 日志的输出级别从第到高: trace < debug < info < warn < error, 低级别自动兼容高级别
     例如设置为 info 时, warn 和 error 的内容也会输出
     此外还有 all 和 off 代表输出所有和不输出
-    在 logback.xml 中, 代表日志输出级别的值不区分大小写
+    在 logback.xml 中, 代表日志输出级别的值不区分大小写, ※ 但是 logback.xml 中的标签严格区分大小写
     输出级别的定义在 ch.qos.logback.classic.Level
 -->
 
@@ -21,7 +21,7 @@ Tips configuration 是 logback.xml 的根节点, 有三个主要属性:
 -->
 <configuration scan="true" scanPeriod="1 seconds" debug="false">
 
-    <!-- Tips contextName 用于设置 logback 上下文名称, 用于区分不用的应用程序 -->
+    <!-- Tips contextName 用于设置 logback 上下文名称, 用于区分不用的应用程序 TODO 没发现有什么用 -->
     <contextName>test-mvc</contextName>
 
     <!--
@@ -40,38 +40,18 @@ Tips configuration 是 logback.xml 的根节点, 有三个主要属性:
     <property name="root_level" value="debug"/>
 
     <!-- 将日志输出到控制台 -->
+    <!-- Tips appender 用于定义日志的输出规则, name 标记此 appender 的名字, class 设置使用哪个类 -->
+    <!-- Tips ConsoleAppender 用于向控制台输出日志 -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
+            <!-- 日志的书写规则 -->
             <pattern>logback: [%d{HH:mm:ss.SSS}] [%-5level] %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <!-- error 级别的日志除了在 info 中记录以外, 再单独输出到一个文件中 -->
-    <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>ERROR</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${log_directory}/error/%d.%i.log</fileNamePattern>
-            <maxFileSize>${log_max_size}</maxFileSize>
-        </rollingPolicy>
-        <encoder>
-            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%thread] [%-5level] %logger{50} - %msg%n</pattern>
-        </encoder>
-    </appender>
-
-    <!-- Tips appender 用于定义日志的输出规则, name 标记此 appender 的名字, class 设置使用哪个类 -->
-    <!-- Tips RollingFileAppender 用于将日志的滚动记录, 可以在某些条件符合以后, 将日志存储到新的文件中 -->
-    <appender name="trace" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <!-- Tips 使用 filter 可以对日志进行过滤 -->
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <!-- Tips 过滤级别, 此处设置只处理大于等于 INFO 级别的日志 -->
-            <level>TRACE</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
+    <!-- 将日志输出到文件 -->
+    <!-- Tips RollingFileAppender 用于向文件中滚动记录日志, 日志在某些条件符合以后, 将存储到新的文件中 -->
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- Tips rollingPolicy 用于设置滚动策略, 需要通过 class 属性配置策略类 -->
         <!-- Tips SizeAndTimeBasedRollingPolicy 的策略: 根据文件大小和时间滚动-->
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
@@ -80,8 +60,8 @@ Tips configuration 是 logback.xml 的根节点, 有三个主要属性:
                 %d 代表 yyyy-MM-dd 格式的日期, 可以在后面添加 {} 来指定日期格式, 例如 %d{yyyy-MM} 表示 "年-月" 格式的日期
                 %i 代表索引, 当日志文件超过指定的单个文件容量而发生滚动时, 同一时间点的多个文件的索引从 0 开始递增
             -->
-            <fileNamePattern>${log_directory}/trace/%d.%i.log</fileNamePattern>
-            <!-- Tips maxHistory 设置文件最多保留多久, 可以为空代表一直保留, 此处不设置了 -->
+            <fileNamePattern>${log_directory}/%d{yyyy-MM}/%d.%i.log</fileNamePattern>
+            <!-- Tips maxHistory 设置文件最多保留多久, 此处不设置代表一直保留 -->
             <!-- Tips 单个文件最大容量 -->
             <maxFileSize>${log_max_size}</maxFileSize>
         </rollingPolicy>
@@ -99,6 +79,34 @@ Tips configuration 是 logback.xml 的根节点, 有三个主要属性:
         </encoder>
     </appender>
 
+    <!-- error 级别的日志除了上面两种记录以外, 再额外输出到一个文件中 -->
+    <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- Tips 使用 filter 可以对日志进行过滤 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- Tips 过滤级别, 此处设置只处理 ERROR 级别的日志 -->
+            <level>ERROR</level>
+            <!--
+            Tips onMatch 和 onMismatch
+                onMatch="ACCEPT" 表示匹配该级别及以上
+                onMatch="DENY" 表示不匹配该级别及以上
+                onMatch="NEUTRAL" 表示该级别及以上的，由下一个filter处理，如果当前是最后一个，则表示匹配该级别及以上
+                onMismatch="ACCEPT" 表示匹配该级别以下
+                onMismatch="NEUTRAL" 表示该级别及以下的，由下一个filter处理，如果当前是最后一个，则不匹配该级别以下的
+                onMismatch="DENY" 表示不匹配该级别以下的
+            -->
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <!-- 运行中 error 应该不会太多, 所以就不按照大小分文件了, 一天一个文件 -->
+        <!-- Tips TimeBasedRollingPolicy 的策略: 根据时间滚动 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log_directory}/%d{yyyy-MM}/error/%d.error</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%thread] [%-5level] %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
     <!--
     Tips logger 可以指定某个包或者类来单独配置日志处理方式, 有三个属性
         name: 指定单独配置的包或者类
@@ -113,7 +121,7 @@ Tips configuration 是 logback.xml 的根节点, 有三个主要属性:
     <root level="${root_level}">
         <appender-ref ref="console"/>
         <appender-ref ref="error"/>
-        <appender-ref ref="trace"/>
+        <appender-ref ref="file"/>
     </root>
 
 </configuration>
