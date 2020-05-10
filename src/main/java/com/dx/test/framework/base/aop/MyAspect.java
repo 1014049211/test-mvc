@@ -3,6 +3,8 @@ package com.dx.test.framework.base.aop;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,6 +14,8 @@ import org.springframework.stereotype.Component;
 @Aspect // Tips 使用 @Aspect 将一个类声明为切面
 @Component // Tips 想让 Spring 感知到这个切面, 还要注册为 Spring 的 Bean
 public class MyAspect {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /*
      * TIps 面向切面(AOP)
@@ -71,7 +75,7 @@ public class MyAspect {
      */
     @Before("executionPointcut() && annotationPointcut()")
     public void before(JoinPoint point) {
-        System.out.println("[AOP Before] " + point.getClass().getSimpleName()
+        logger.info("[AOP Before] " + point.getClass().getSimpleName()
                 + "#" + point.getSignature().getName() + "开始调用了");
     }
 
@@ -82,7 +86,7 @@ public class MyAspect {
      */
     @After("executionPointcut() && annotationPointcut()")
     public void after(JoinPoint point) {
-        System.out.println("[AOP After] " + point.getClass().getSimpleName()
+        logger.info("[AOP After] " + point.getClass().getSimpleName()
                 + "#" + point.getSignature().getName() + "调用结束了");
     }
 
@@ -99,9 +103,9 @@ public class MyAspect {
         String message = "[AOP AfterReturning] " + point.getClass().getSimpleName() +
                 "#" + point.getSignature().getName();
         if (result == null) {
-            System.out.println(message + " 没有返回值");
+            logger.info(message + " 没有返回值");
         } else {
-            System.out.println(message + " 的返回值为: " + result.toString());
+            logger.info(message + " 的返回值为: " + result.toString());
         }
     }
 
@@ -116,8 +120,8 @@ public class MyAspect {
         // Tips throwing 定义将异常传给哪个参数, 此处传给 e
         // Tips e 的类型设置为 Exception 代表所有异常都会进入这个方法来处理. 如果指定异常类型, 只有指定类型的异常会传入
         // Tips 传入此处的异常并不是被 catch, 依然会抛出, 只是抛出之前会调用这个方法
-        System.out.println("[AOP AfterThrowing] " + point.getClass().getSimpleName() +
-                "#" + point.getSignature().getName() + " 发生了异常: " + e.getMessage());
+        logger.error("[AOP AfterThrowing] " + point.getClass().getSimpleName() +
+                "#" + point.getSignature().getName() + " 发生了异常: " + e.getMessage(), e);
     }
 
     /**
@@ -133,18 +137,18 @@ public class MyAspect {
         String message = "[AOP Around] " + point.getClass().getSimpleName() +
                 "#" + point.getSignature().getName();
 
-        System.out.println(message + " start");
+        logger.info(message + " start");
 
         // Tips 在 Around 中, 可以修改切点的执行参数和返回值 ,并且可以在此处理切点的异常
         Object[] args = point.getArgs();
         // 没有参数时返回的是空数组, 不会返回 null
         // Tips 编写程序时, 返回数组或集合的方法都应该尽量避免返回 null, 可以省掉很多麻烦
         if (args.length == 0) {
-            System.out.println(message + " 没有参数");
+            logger.info(message + " 没有参数");
         } else {
-            System.out.println(message + " 参数为:");
+            logger.info(message + " 参数为:");
             for (Object arg : args) {
-                System.out.println(arg);
+                logger.info(String.valueOf(arg));
             }
         }
 
@@ -162,12 +166,12 @@ public class MyAspect {
             long endTime = System.currentTimeMillis();
 
             // 打印执行时间
-            System.out.println(
+            logger.info(
                     "[AOP Around] " + point.getClass().getSimpleName() +
                             "#" + point.getSignature().getName() + " 方法的执行时间为: " + (endTime - startTime) + " 毫秒"
             );
 
-            System.out.println("[AOP Around] end");
+            logger.info("[AOP Around] end");
         }
 
         // 直接结果原封不动直接返回
