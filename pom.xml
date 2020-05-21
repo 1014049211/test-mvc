@@ -125,6 +125,11 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.12</version>
+            <!--
+            Tips provided 代表此 jar 只在变异和测试时有效, 运行时并不会添加到最后的项目中
+                lombok 只是在编译时给类生成属性相关的方法, 所以在编译后无需添加到项目中
+            -->
+            <scope>provided</scope>
         </dependency>
 
         <!-- logback -->
