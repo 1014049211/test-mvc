@@ -2,6 +2,7 @@ package com.dx.test.framework.base.config;
 
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.dx.test.framework.base.interceptor.MyInterceptor;
+import com.dx.test.framework.base.interceptor.TokenInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -115,6 +116,12 @@ public class MyMvcConfig implements WebMvcConfigurer {
                 // 为空或省略此步骤表示没有需要特殊处理的请求
                 // 此处不拦截跳转到主页的请求
                 .excludePathPatterns("/");
+
+        // 令牌拦截器
+        registry.addInterceptor(new TokenInterceptor()).excludePathPatterns("/");
+
+        // Tips 由于本项目的 RequestMappingHandlerMapping 是手动添加, 所以此方法里的拦截器不会作用于 HandlerMethod
+        //  想生效需要手动向 RequestMappingHandlerMapping 中添加 MappedInterceptor 类型的拦截器
     }
 
     /**
