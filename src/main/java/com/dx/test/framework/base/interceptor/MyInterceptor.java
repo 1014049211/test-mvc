@@ -73,9 +73,6 @@ public class MyInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable ModelAndView modelAndView) {
         System.out.println(request.getRequestURI() + " 进入 postHandle 方法");
-
-        // 记录每次请求的处理用时
-        this.recordUsedTime(request);
     }
 
     /**
@@ -93,24 +90,14 @@ public class MyInterceptor implements HandlerInterceptor {
         if (e != null) {
             // 记录异常日志 TODO 此处可以考虑发邮件或者录入数据库
             logger.error(request.getRequestURI() + " 因发生异常而结束: " + e.getMessage(), e);
-            // 记录用时: 如果发生了异常, 不会调用 postHandle 方法, 所以要在这里记录
-            this.recordUsedTime(request);
         }
 
-    }
-
-    /**
-     * 记录每次请求的处理用时
-     *
-     * @param request HttpServletRequest
-     */
-    private void recordUsedTime(HttpServletRequest request) {
-
+        // 记录用时: 如果发生了异常, 不会调用 postHandle 方法, 所以要在这里记录
         // 提取开始处理请求的时间
         Long startTime;
         try {
             startTime = (Long) request.getAttribute("MyInterceptor_startTime");
-        } catch (Exception e) {
+        } catch (Exception ee) {
             startTime = null;
         }
 
@@ -132,6 +119,5 @@ public class MyInterceptor implements HandlerInterceptor {
             }
         }
     }
-
 
 }
