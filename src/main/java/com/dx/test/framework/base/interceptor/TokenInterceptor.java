@@ -32,13 +32,16 @@ public class TokenInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
+        // 使用去掉了参数部分的请求路径作为令牌的键
+        String token = request.getRequestURI().split("\\?")[0];
+
         // 获取 session 提取令牌
         // Tips 令牌存入 session 时, 可以使用请求地址作为键, 此处为了省事就用 "token" 了
         HttpSession session = request.getSession();
-        String sessionToken = (String) session.getAttribute("token");
+        String sessionToken = (String) session.getAttribute(token);
         // 如果 session 中还没有令牌, 是第一次请求, 生成一个令牌
         if (StringUtil.isEmpty(sessionToken)) {
-            session.setAttribute("token", "1");
+            session.setAttribute(token, "1");
         } else {
             // 重复请求
             response.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
@@ -54,6 +57,6 @@ public class TokenInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         // 无论请求是否成功, 都删除令牌
-        request.getSession().removeAttribute("token");
+        request.getSession().removeAttribute(request.getRequestURI().split("\\?")[0]);
     }
 }
