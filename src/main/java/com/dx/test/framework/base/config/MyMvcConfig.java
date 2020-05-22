@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.handler.MappedInterceptor;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -115,10 +116,10 @@ public class MyMvcConfig implements WebMvcConfigurer {
                 // 添加不用拦截的 URL 请求路径, 支持 String 类型的可变长度参数列表和数组
                 // 为空或省略此步骤表示没有需要特殊处理的请求
                 // 此处不拦截跳转到主页的请求
-                .excludePathPatterns("/");
+                .excludePathPatterns("/", "/static/**");
 
         // 令牌拦截器
-        registry.addInterceptor(new TokenInterceptor()).excludePathPatterns("/");
+        registry.addInterceptor(new TokenInterceptor()).excludePathPatterns("/", "/static/**");
 
         // Tips 由于本项目的 RequestMappingHandlerMapping 是手动添加, 所以此方法里的拦截器不会作用于 HandlerMethod
         //  想生效需要手动向 RequestMappingHandlerMapping 中添加 MappedInterceptor 类型的拦截器
@@ -147,7 +148,19 @@ public class MyMvcConfig implements WebMvcConfigurer {
      */
     @Bean
     public RequestMappingHandlerMapping requestMappingHandlerMapping() {
-        return new RequestMappingHandlerMapping();
+        RequestMappingHandlerMapping mapping = new RequestMappingHandlerMapping();
+        /*
+         * Tips 手动添加的映射器, 很多东西 Spring 都不管了, 拦截器都要自己设置
+         *
+         * Tips Spring 容器加载过程中 其实使用的是 MappedInterceptor, 是 HandlerInterceptor 的子类
+         *  内部对 HandlerInterceptor 进行了套娃, 主要作用是添加两个属性, 用于判断拦截器的作用范围和忽略范围
+         */
+        String[] exclude = new String[]{"/", "/static/**"};
+        mapping.setInterceptors(
+                new MappedInterceptor(null, exclude, new MyInterceptor()),
+                new MappedInterceptor(null, exclude, new TokenInterceptor())
+        );
+        return mapping;
     }
 
     /**
