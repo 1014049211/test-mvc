@@ -4,6 +4,7 @@ import com.dx.test.framework.base.util.DateUtil;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jms.annotation.EnableJms;
@@ -19,6 +20,7 @@ import javax.jms.Session;
  * ActiveMQ 配置类
  */
 @Configuration
+@Conditional(ActivemqCondition.class)
 @PropertySource("classpath:properties/activemq.properties")
 @EnableJms // Tips 开启 Spring 对于 JMS 的支持
 public class ActivemqConfig {

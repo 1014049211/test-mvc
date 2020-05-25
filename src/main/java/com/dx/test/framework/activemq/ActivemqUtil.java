@@ -3,6 +3,7 @@ package com.dx.test.framework.activemq;
 import org.apache.activemq.command.ActiveMQQueue;
 import org.apache.activemq.command.ActiveMQTopic;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
  * 消息队列工具类
  */
 @Component
+@Conditional(ActivemqCondition.class)
 public class ActivemqUtil {
 
     /**
@@ -49,14 +51,14 @@ public class ActivemqUtil {
         topicJmsTemplate.convertAndSend(new ActiveMQTopic(destination), message);
     }
 
-    @Autowired
+    @Autowired(required = false)
     public void setJmsTemplate(JmsTemplate queueJmsTemplate) {
         if (ActivemqUtil.queueJmsTemplate == null) {
             ActivemqUtil.queueJmsTemplate = queueJmsTemplate;
         }
     }
 
-    @Autowired
+    @Autowired(required = false)
     public void setTopicJmsTemplate(JmsTemplate topicJmsTemplate) {
         if (ActivemqUtil.topicJmsTemplate == null) {
             ActivemqUtil.topicJmsTemplate = topicJmsTemplate;

@@ -1,5 +1,7 @@
 package com.dx.test.business.activemq;
 
+import com.dx.test.framework.activemq.ActivemqCondition;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @DependsOn("activemqConfig")
+@Conditional(ActivemqCondition.class)
 public class TestConsumer {
 
     // --------------- 队列消息的消费者 ------------------
